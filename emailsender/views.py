@@ -2,6 +2,8 @@ from django.shortcuts import render
 from .forms import GroupEmailForm,CreateGroup
 from .models import Group, Email, Message
 from django.urls import reverse
+from django.http import HttpResponse
+
 # Create your views here.
 def create_group(request):
     if request.method=='POST':
