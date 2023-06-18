@@ -27,13 +27,12 @@ add_comment
                     <div id="details-collapsecontact"
                         class="accordion-collapse details-collapseOne collapse">
                         <div class="accordion-body d-flex flex-column">
-                            <a class="nav-link" href="http://127.0.0.1:5500/html/contacts.html">View Contacts</a>
-                            <a class="nav-link" href="http://127.0.0.1:5500/html/createcontact.html">Create Contacts</a>
+                            <a class="nav-link" href="/">View Contacts</a>
+                            <a class="nav-link" href="http://127.0.0.1:5500/createcontact.html">Create Contacts</a>
                         </div>
                     </div>
                 </div>
             </li>
-           
            
        
             
