@@ -1,4 +1,3 @@
 venv
-.vscode
-__pycache
-__pycache____
+.vscode=
+__pycache__
