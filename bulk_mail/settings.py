@@ -38,7 +38,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+<<<<<<< HEAD
     "emailsender"
+=======
+    "django_extensions",
+    'emailsender'
+>>>>>>> 04cc1d381905f9fbf213e07383435f8fd3429346
 ]
 
 MIDDLEWARE = [
