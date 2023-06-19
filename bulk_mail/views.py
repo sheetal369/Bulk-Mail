@@ -12,7 +12,7 @@ def create_user(request):
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('view_contacts')  # Redirect to the user list view after successful creation
+            return redirect('view_contacts') 
     else:
         form = UserForm()
     return render(request, 'create_contact.html', {'form': form})
@@ -36,10 +36,6 @@ def create_group(request):
 def view_contacts(request):
     contacts = User.objects.all()
     return render(request, 'contacts.html', {"contacts":contacts})
-
-# def create_group(request):
-#     contacts = User.objects.all()
-#     return render(request, 'create_group.html', {"contacts":contacts})
 
 def view_groups(request):
     groups = Group.objects.all()

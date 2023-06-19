@@ -4,7 +4,7 @@
 <div class="col-md-10 db-content">
     <div class="add-heading">
         <h3 class="heading-cm">
-            <a href="" class="nav-icon me-2">
+            <a href="{% url "index" %}" class="nav-icon me-2">
                 <i class="fa-solid fa-angle-left"></i>
             </a>
             Contacts<span class="sub-nav ms-2"> > All Contacts</span>
@@ -46,7 +46,7 @@
                                     delete
                                     </span></a>
                         </div>
-                        <form class="action-btn-dlt" action="" method="post">
+                        <form class="action-btn-dlt" action="{% url 'delete_contact' %}" method="post">
                             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered confirmation-modal">
                                     <div class="modal-content">
