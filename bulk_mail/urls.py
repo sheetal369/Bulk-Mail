@@ -26,5 +26,6 @@ urlpatterns = [
     path('view_contacts/', view_contacts, name="view_contacts"),
     path('view_groups/', view_groups, name="view_groups"),
     path('create_group/', create_group, name="create_group"),
-    path('view_group/', view_group, name="view_group"),
+    path('group/<int:id>/', group_detail, name='group'),
+    # path('view_group/<int>', view_group, name="view_group"),
 ]
