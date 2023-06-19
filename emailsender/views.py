@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from .forms import GroupEmailForm,CreateGroup
+from .forms import GroupEmailForm, CreateGroup, UserForm
 from .models import Group, Email, Message
-from django.urls import reverse
+from django.urls import reverse, redirect
 from django.http import HttpResponse
+
 
 # Create your views here.
 def create_group(request):
