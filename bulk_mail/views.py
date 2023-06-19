@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 from emailsender.models import *
 
 def index(request):
+    
     return render(request,'index.html')
 
 def create_user(request):
