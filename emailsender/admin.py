@@ -1,15 +1,20 @@
 from django.contrib import admin
-from .models import Group, Email
+from .models import Group, User, Message
 
-# Register your models here.
 @admin.register(Group)
-class GroupRegister(admin.ModelAdmin):
-    list_display=['id','name','Associated_Emails']
-    def Associated_Emails(self, obj):
-        return ",".join([email.email_address for email in obj.emails.all()])
-   
-@admin.register(Email)
-class EmailRegister(admin.ModelAdmin):
-    list_display=['id','email_address','group']
-    def group(self, obj):
-        return ",".join([groups.name for groups in obj.groups.all()])
+class GroupAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'associated_users']
+    
+    def associated_users(self, obj):
+        return ", ".join([email.email_address for email in obj.emails.all()])
+    associated_users.short_description = 'Associated Users'
+
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ['id', 'full_name', 'email_address', 'phone_number']
+
+
+@admin.register(Message)
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ['id', 'group', 'subject', 'created_at']

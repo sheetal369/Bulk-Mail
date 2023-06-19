@@ -1,0 +1,61 @@
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-column db-navbar">
+                <li class="nav-item">
+                <a class="nav-link active"
+                    href="{% url 'index' %}">
+                    <span class="material-symbols-outlined">
+    add_comment
+    </span>Compose Mail</a>
+                </li>
+                <li class="nav-item accordion" id="users">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <p class="accordion-button collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#details-collapsecontact"
+                                aria-expanded="false" aria-controls="details-collapseuser" style="line-height: 1.7;">
+                                <span class="material-symbols-outlined">contact_emergency</span>Contacts
+                            </p>
+                        </h2>
+                        <div id="details-collapsecontact"
+                            class="accordion-collapse details-collapseOne collapse">
+                            <div class="accordion-body d-flex flex-column">
+                                <a class="nav-link" href="{% url 'view_contacts' %}">View Contacts</a>
+                                <a class="nav-link" href="{% url 'create_contact' %}">Create Contacts</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+               
+           
+                
+                <li class="nav-item accordion" id="users">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <p class="accordion-button collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#details-collapseregistration"
+                                aria-expanded="false" aria-controls="details-collapseuser" style="line-height: 1.7;">
+                                <span class="material-symbols-outlined">
+                                new_window
+                                </span>Groups
+                            </p>
+                        </h2>
+                        <div id="details-collapseregistration"
+                            class="accordion-collapse details-collapseOne collapse">
+                            <div class="accordion-body d-flex flex-column">
+                                <a class="nav-link" href="{% url 'view_group' %}">View Groups</a>
+                                <a class="nav-link" href="{% url 'create_group' %}">Create Group</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </nav>
