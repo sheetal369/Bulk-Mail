@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 class Group(models.Model):
     name = models.CharField(max_length=60, unique=True)
@@ -7,6 +8,14 @@ class Group(models.Model):
 
     def __str__(self):
         return self.name
+    
+    @property
+    def members_count(self):
+        return self.emails.count()
+    
+    def get_absolute_url(self):
+        return reverse("group", kwargs={"id": self.id})
+        return reverse("group", args=[self.id])
 
 class User(models.Model):
     full_name = models.CharField(max_length=100)
