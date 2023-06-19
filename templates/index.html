@@ -15,8 +15,8 @@
   </div>
 
 
-  <form action="" method="POST" class="form-cm" enctype="multipart/form-data"
-      id="myForm">
+  <form action="{% url 'index' %}" method="POST" class="form-cm" enctype="multipart/form-data" id="myForm">
+    {% csrf_token %}
       <div class="col-md-12">
           <h3 class="create-form-heading">Compose Mail</h3>
       </div>
@@ -24,7 +24,7 @@
       <div class="row mb-2">
           <div class="mb-3 col-md-12">
               <label for="" class="form-label cm">Mail Subject</label>
-              <input type="text" class="form-control cm" placeholder="Enter subject" name="name">
+              <input type="text" class="form-control cm" placeholder="Enter subject" name="subject">
           </div>
       </div>
 
@@ -38,43 +38,17 @@
       <div class="row mb-2">
           <div class="mb-3 col-md-12">
               <label for="" class="form-label cm">Choose Group</label>
+              
               <div class="checkbox-group">
+                {% for group in groups %}
                  <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                  <label class="form-check-label" for="flexCheckDefault">
-                    Default checkbox
+                  <input class="form-check-input" type="checkbox" name="group" value={{ group.id }} id=flexCheckChecked>
+                  <label class="form-check-label">
+                    {{ group.name }}
                   </label>
                 </div>
-                <div class="form-check ms-3">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                  <label class="form-check-label" for="flexCheckChecked">
-                    Checked checkbox
-                  </label>
-                </div>
-                <div class="form-check ms-3">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                  <label class="form-check-label" for="flexCheckChecked">
-                    Checked checkbox
-                  </label>
-                </div>
-                <div class="form-check ms-3">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                  <label class="form-check-label" for="flexCheckChecked">
-                    Checked checkbox
-                  </label>
-                </div>
-                <div class="form-check ms-3">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                  <label class="form-check-label" for="flexCheckChecked">
-                    Checked checkbox
-                  </label>
-                </div>
-                <div class="form-check ms-3">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                  <label class="form-check-label" for="flexCheckChecked">
-                    Checked checkbox
-                  </label>
-                </div>
+                {% endfor %}
+              
               </div>
           </div>
       </div>

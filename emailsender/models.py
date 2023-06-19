@@ -15,7 +15,6 @@ class Group(models.Model):
     
     def get_absolute_url(self):
         return reverse("group", kwargs={"id": self.id})
-        return reverse("group", args=[self.id])
 
 class User(models.Model):
     full_name = models.CharField(max_length=100)
@@ -26,7 +25,7 @@ class User(models.Model):
         return self.email_address
 
 class Message(models.Model):
-    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    group = models.ManyToManyField(Group, name='message_group')
     subject = models.CharField(max_length=255)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

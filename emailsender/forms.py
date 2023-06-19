@@ -13,12 +13,8 @@ class UserForm(forms.ModelForm):
 
 
 class GroupEmailForm(forms.Form):
-    group = forms.ModelChoiceField(queryset=Group.objects.all())
     subject = forms.CharField(max_length=255)
-    message = forms.CharField(widget=forms.Textarea)
+    message = forms.Textarea()
+    group= forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple)
 
-    def clean_group(self):
-        group = self.cleaned_data['group']
-        if not group.emails.exists():
-            raise forms.ValidationError("The selected group doesn't have any email addresses.")
-        return group
+    
