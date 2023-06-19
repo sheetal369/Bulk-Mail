@@ -14,8 +14,8 @@
     </div>
 
 
-    <form action="" method="POST" class="form-cm" enctype="multipart/form-data"
-        id="myForm">
+    <form action="{% url 'create_group' %}" method="POST" class="form-cm" enctype="multipart/form-data" id="myForm">
+        {% csrf_token %}
         <div class="col-md-12">
             <h3 class="create-form-heading">Compose Mail</h3>
         </div>
@@ -47,30 +47,18 @@
                                 <td>Email Address</td>
                             </tr>
                         </thead>
-                      <tr>
-                        <td><input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"></td>
-                        <td>Pradeep Marasini</td>
-                        <td>9869469665</td>
-                        <td>hello@pradeepmarasini.com</td>
-                      </tr>
-                      <tr>
-                        <td><input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"></td>
-                        <td>Subarna Bhandari</td>
-                        <td>9869469665</td>
-                        <td>hello@subarnabhandari.com</td>
-                      </tr>
-                      <tr>
-                        <td><input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"></td>
-                        <td>Subarna Bhandari</td>
-                        <td>9869469665</td>
-                        <td>hello@subarnabhandari.com</td>
-                      </tr>
-                    </tbody>
+                        {% for contact in contacts %}
+                        <tr>
+                            <td><input class="form-check-input" name = "check_status" type="checkbox" value="" id="flexCheckChecked"></td>
+                            <td>{{ contact.full_name }}</td>
+                            <td>{{ contact.phone_number }}</td>
+                            <td>{{ contact.email_address }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>                    
                 </table>
             </div>
         </div>
-
-
         <div class="row mt-3">
             <div class="col-md-12 text-end"><button type="submit" name="verify" class="btn btn-primary">Create Group</button></div>
         </div>
