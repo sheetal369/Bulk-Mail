@@ -40,6 +40,12 @@ def create_user(request):
         form = UserForm()
     return render(request, 'create_contact.html', {'form': form})
 
+def delete_user(request, user_id):
+    user = User.objects.get(id = user_id)
+    user.delete()
+    return redirect(reverse("view_contacts"))
+
+
 
 def create_group(request):
     if request.method == 'POST':
