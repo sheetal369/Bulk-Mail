@@ -26,7 +26,6 @@ def index(request):
         
         
         return redirect(reverse('sent_success', args=(message.id,)))
-
         
     return render(request,'index.html',{'groups':groups})
 
