@@ -17,13 +17,13 @@
     <form action="{% url 'create_group' %}" method="POST" class="form-cm" enctype="multipart/form-data" id="myForm">
         {% csrf_token %}
         <div class="col-md-12">
-            <h3 class="create-form-heading">Compose Mail</h3>
+            <h3 class="create-form-heading">Create Group</h3>
         </div>
 
         <div class="row mb-2">
             <div class="mb-3 col-md-12">
                 <label for="" class="form-label cm">Group Name</label>
-                <input type="text" class="form-control cm" placeholder="Enter subject" name="name">
+                <input type="text" class="form-control cm" placeholder="Enter subject" name="group_name">
             </div>
         </div>
 
@@ -49,7 +49,7 @@
                         </thead>
                         {% for contact in contacts %}
                         <tr>
-                            <td><input class="form-check-input" name = "check_status" type="checkbox" value="" id="flexCheckChecked"></td>
+                            <td><input class="form-check-input" name = "check_status" type="checkbox" value= {{contact.id}} id="flexCheckChecked"></td>
                             <td>{{ contact.full_name }}</td>
                             <td>{{ contact.phone_number }}</td>
                             <td>{{ contact.email_address }}</td>
