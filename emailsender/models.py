@@ -36,7 +36,7 @@ class Message(models.Model):
     class Status(models.TextChoices):
         DRAFT ='DF', 'Draft'
         SENT ='ST', 'Sent'
-    group = models.ManyToManyField(Group, name='message_group')
+    group = models.ManyToManyField(Group, name='message_group',related_name="groups")
     subject = models.CharField(max_length=255)
     content = models.TextField()
     status= models.CharField(max_length=2,
