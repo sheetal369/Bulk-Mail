@@ -39,11 +39,16 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "emailsender"
 =======
     "django_extensions",
     'emailsender'
 >>>>>>> 04cc1d381905f9fbf213e07383435f8fd3429346
+=======
+    "django_extensions",
+    "emailsender",
+>>>>>>> sheetal
 ]
 
 MIDDLEWARE = [
@@ -130,3 +135,10 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = '018bscit032@sxc.edu.np'
+EMAIL_HOST_PASSWORD = 'what?kiki'

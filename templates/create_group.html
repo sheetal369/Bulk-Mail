@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="col-md-10 db-content">
+    <div class="add-heading">
+        <h3 class="heading-cm">
+            <a href="" class="nav-icon me-2">
+                <i class="fa-solid fa-angle-left"></i>
+            </a>
+            Compose Mail<span class="sub-nav ms-2"> > Create Mail</span>
+        </h3>
+        <p><a href="">View All</a></p>
+    </div>
+
+
+    <form action="{% url 'create_group' %}" method="POST" class="form-cm" enctype="multipart/form-data" id="myForm">
+        {% csrf_token %}
+        <div class="col-md-12">
+            <h3 class="create-form-heading">Create Group</h3>
+        </div>
+
+        <div class="row mb-2">
+            <div class="mb-3 col-md-12">
+                <label for="" class="form-label cm">Group Name</label>
+                <input type="text" class="form-control cm" placeholder="Enter subject" name="group_name">
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="mb-3 col-md-12">
+                <label for="" class="form-label cm">Group Description</label>
+                <textarea  id="mailBox" name="mailBox" class="form-control cm" rows="6"></textarea>
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="mb-3 col-md-12">
+                <label for="" class="form-label cm">Select Contacts</label>
+                <table class="table table-hover check-list-table">
+                    <tbody>
+                        <thead>
+                            <tr>
+                                <td><input class="form-check-input" type="checkbox" value="" id="check-all"></td>
+                                <td>Full Name</td>
+                                <td>Contact Number</td>
+                                <td>Email Address</td>
+                            </tr>
+                        </thead>
+                        {% for contact in contacts %}
+                        <tr>
+                            <td><input class="form-check-input" name = "check_status" type="checkbox" value= {{contact.id}} id="flexCheckChecked"></td>
+                            <td>{{ contact.full_name }}</td>
+                            <td>{{ contact.phone_number }}</td>
+                            <td>{{ contact.email_address }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>                    
+                </table>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12 text-end"><button type="submit" name="verify" class="btn btn-primary">Create Group</button></div>
+        </div>
+
+    </form>                    
+</div>
+{% endblock content %}
+    

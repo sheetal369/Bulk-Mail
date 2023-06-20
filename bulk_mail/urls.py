@@ -16,9 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from . import views
+from django.shortcuts import redirect
+from .views import *
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('',views.index),
+    path('', index, name="index"),
+
+    path('view_contacts/', view_contacts, name="view_contacts"),    
+    path('create-contact/', create_user, name="create_contact"),
+    
+    path('view_groups/', view_groups, name="view_groups"),
+    path('create_group/', create_group, name="create_group"),
+    path('group/<int:id>/', group_detail, name='group'),
+    path('emailsent/<int:id>/',sent_success,name="sent_success"),
 ]

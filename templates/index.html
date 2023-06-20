@@ -1,156 +1,68 @@
+{% extends 'base.html' %}
 {% load static %}
-<!doctype html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mailing System</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.4.1/css/dataTables.dateTime.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-        <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="../image/np.png" type="image/x-icon">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="../datepicker/nepali-date-picker.min.css">
 
-</head>
 
-<body>
-    <div class="container-fluid db-top-bar">{% include 'topbar.html' %}</div>
-    <div class="container-fluid">
-        <div class="row main">
-            <div class="col-md-2 bd-navbar">{% include 'navbar.html' %}</div>
-            <div class="col-md-10 db-content">
-                <div class="add-heading">
-                    <h3 class="heading-cm">
-                        <a href="" class="nav-icon me-2">
-                            <i class="fa-solid fa-angle-left"></i>
-                        </a>
-                        Compose Mail<span class="sub-nav ms-2"> > Create Mail</span>
-                    </h3>
-                    <p><a href="">View All</a></p>
+{% block content %}
+<div class="col-md-10 db-content">
+  <div class="add-heading">
+      <h3 class="heading-cm">
+          <a href="" class="nav-icon me-2">
+              <i class="fa-solid fa-angle-left"></i>
+          </a>
+          Compose Mail<span class="sub-nav ms-2"> > Create Mail</span>
+      </h3>
+      <p><a href="">View All</a></p>
+  </div>
+
+
+  <form action="{% url 'index' %}" method="POST" class="form-cm" enctype="multipart/form-data" id="myForm">
+    {% csrf_token %}
+      <div class="col-md-12">
+          <h3 class="create-form-heading">Compose Mail</h3>
+      </div>
+
+      <div class="row mb-2">
+          <div class="mb-3 col-md-12">
+              <label for="" class="form-label cm">Mail Subject</label>
+              <input type="text" class="form-control cm" placeholder="Enter subject" name="subject">
+          </div>
+      </div>
+
+      <div class="row mb-2">
+          <div class="mb-3 col-md-12">
+              <label for="" class="form-label cm">Mail message</label>
+              <textarea  id="mailBox" name="mailBox" class="form-control cm"></textarea>
+          </div>
+      </div>
+
+      <div class="row mb-2">
+          <div class="mb-3 col-md-12">
+              <label for="" class="form-label cm">Choose Group</label>
+              
+              <div class="checkbox-group">
+                {% for group in groups %}
+                 <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="group" value={{ group.id }} id=flexCheckChecked>
+                  <label class="form-check-label">
+                    {{ group.name }}
+                  </label>
+<<<<<<< HEAD
+                </div>                  
+=======
                 </div>
+                {% endfor %}
+              
+>>>>>>> 341effe4c4300c752cd875c5d81f064acb702000
+              </div>
+          </div>
+      </div>
 
+  
+      <div class="row mt-3">
+          <div class="col-md-12 text-end"><button type="submit" name="verify" class="btn btn-primary">Send Mail</button></div>
+      </div>
 
-                <form action="" method="POST" class="form-cm" enctype="multipart/form-data"
-                    id="myForm">
-                    <div class="col-md-12">
-                        <h3 class="create-form-heading">Compose Mail</h3>
-                    </div>
-
-                    <div class="row mb-2">
-                        <div class="mb-3 col-md-12">
-                            <label for="" class="form-label cm">Mail Subject</label>
-                            <input type="text" class="form-control cm" placeholder="Enter subject" name="name">
-                        </div>
-                    </div>
-
-                    <div class="row mb-2">
-                        <div class="mb-3 col-md-12">
-                            <label for="" class="form-label cm">Mail message</label>
-                            <textarea  id="mailBox" name="mailBox" class="form-control cm"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="row mb-2">
-                        <div class="mb-3 col-md-12">
-                            <label for="" class="form-label cm">Choose Group</label>
-                            <div class="checkbox-group">
-                               <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                  Default checkbox
-                                </label>
-                              </div>
-                              <div class="form-check ms-3">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                <label class="form-check-label" for="flexCheckChecked">
-                                  Checked checkbox
-                                </label>
-                              </div>
-                              <div class="form-check ms-3">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                <label class="form-check-label" for="flexCheckChecked">
-                                  Checked checkbox
-                                </label>
-                              </div>
-                              <div class="form-check ms-3">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                <label class="form-check-label" for="flexCheckChecked">
-                                  Checked checkbox
-                                </label>
-                              </div>
-                              <div class="form-check ms-3">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                <label class="form-check-label" for="flexCheckChecked">
-                                  Checked checkbox
-                                </label>
-                              </div>
-                              <div class="form-check ms-3">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                <label class="form-check-label" for="flexCheckChecked">
-                                  Checked checkbox
-                                </label>
-                              </div>
-                            </div>
-                        </div>
-                    </div>
-
-                
-                    <div class="row mt-3">
-                        <div class="col-md-12 text-end"><button type="submit" name="verify" class="btn btn-primary">Send Mail</button></div>
-                    </div>
-
-                </form>                    
-            </div>
-        </div>
-
-    </div>
-    </div>
-
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
-        integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous">
-        </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-        </script>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
-    <script src="https://cdn.datatables.net/datetime/1.4.1/js/dataTables.dateTime.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    
-    {% comment %} <script src="{% static 'js/script.js' %}"></script> {% endcomment %}
-
-    <script>
-        $(document).ready(function() {
-            $('#mailBox').summernote();
-        });
-    </script>
-
-
-</body>
-
-</html>
+  </form>                    
+</div>
+{% endblock content %}
+  

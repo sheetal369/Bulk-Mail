@@ -9,7 +9,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-column db-navbar">
                 <li class="nav-item">
                 <a class="nav-link active"
-                    href="http://127.0.0.1:5500/Bulk%20Mail/html/index.html">
+                    href="{% url 'index' %}">
                     <span class="material-symbols-outlined">
     add_comment
     </span>Compose Mail</a>
@@ -26,8 +26,8 @@
                         <div id="details-collapsecontact"
                             class="accordion-collapse details-collapseOne collapse">
                             <div class="accordion-body d-flex flex-column">
-                                <a class="nav-link" href="/">View Contacts</a>
-                                <a class="nav-link" href="http://127.0.0.1:5500/createcontact.html">Create Contacts</a>
+                                <a class="nav-link" href="{% url 'view_contacts' %}">View Contacts</a>
+                                <a class="nav-link" href="{% url 'create_contact' %}">Create Contacts</a>
                             </div>
                         </div>
                     </div>
@@ -49,8 +49,8 @@
                         <div id="details-collapseregistration"
                             class="accordion-collapse details-collapseOne collapse">
                             <div class="accordion-body d-flex flex-column">
-                                <a class="nav-link" href="http://127.0.0.1:5500/Bulk%20Mail/html/groups.html">View Groups</a>
-                                <a class="nav-link" href="http://127.0.0.1:5500/Bulk%20Mail/html/creategroup.html">Create Group</a>
+                                <a class="nav-link" href="{% url 'view_groups' %}">View Groups</a>
+                                <a class="nav-link" href="{% url 'create_group' %}">Create Group</a>
                             </div>
                         </div>
                     </div>
