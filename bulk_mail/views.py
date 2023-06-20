@@ -1,11 +1,34 @@
-from django.shortcuts import HttpResponse, render
+from django.shortcuts import HttpResponse, render,get_object_or_404
+from django.core.mail import EmailMessage,EmailMultiAlternatives
 from emailsender.forms import *
 from django.urls import reverse
 from django.shortcuts import redirect
 from emailsender.models import *
 
 def index(request):
-    return render(request,'index.html')
+    groups=Group.objects.all()
+    if request.method=='POST':
+        subject=request.POST['subject']
+        message=request.POST['mailBox']
+        selected_id = request.POST.getlist('group')
+        selected_groups=[Group.objects.get(id=i) for i in selected_id]
+        emails=((selected_group.emails.values_list('email_address', flat=True)) for selected_group in selected_groups)
+        all_emails=[email for sublist in emails for email in sublist]
+        email_message = EmailMultiAlternatives(subject, message, to=all_emails)#Send Email to all emails 
+        email_message.content_subtype='html'
+        email_message.send()
+        message=Message.objects.create(
+                subject=subject,
+                content=message,
+            )
+        for g in selected_groups:
+            message.message_group.add(g)
+        
+        
+        return redirect(reverse('sent_success', args=(message.id,)))
+
+        
+    return render(request,'index.html',{'groups':groups})
 
 def create_user(request):
     if request.method == 'POST':
@@ -43,3 +66,8 @@ def view_groups(request):
 
 def group_detail(request):
     return render(request, 'group.html')
+
+def sent_success(request,id):
+    message=get_object_or_404(Message, id=id)
+    sent_groups=message.message_group.all()
+    return render(request,'sentsuccess.html',{'sent_groups':sent_groups})
