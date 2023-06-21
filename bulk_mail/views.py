@@ -14,7 +14,6 @@ def index(request):
         converter.ignore_links = True  # Ignore hyperlinks
         plain_text = converter.handle(message)
         selected_id = request.POST.getlist('group')
-        print((selected_id))
         selected_groups=[Group.objects.get(id=i) for i in (selected_id)]
         if 'sent' in request.POST:
             emails=((selected_group.emails.values_list('email_address', flat=True)) for selected_group in selected_groups)
@@ -93,7 +92,7 @@ def sent_success(request,id):
     message=get_object_or_404(Message, id=id)
     sent_groups=message.message_group.all()
     return render(request,'sentsuccess.html',{'sent_groups':sent_groups})
-def save_to_draft(request):
+def save_to_draft(request,):
     return render(request,'save_to_draft.html')
 def all_mails(request):
     sent_mails=Message.sent.all()
