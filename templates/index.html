@@ -23,14 +23,14 @@
       <div class="row mb-2">
           <div class="mb-3 col-md-12">
               <label for="" class="form-label cm">Mail Subject</label>
-              <input type="text" class="form-control cm" placeholder="Enter subject" name="subject">
+              <input type="text" value="{{ message.subject }}"class="form-control cm" placeholder="Enter subject" name="subject">
           </div>
       </div>
 
       <div class="row mb-2">
           <div class="mb-3 col-md-12">
               <label for="" class="form-label cm">Mail message</label>
-              <textarea  id="mailBox" name="mailBox" class="form-control cm"></textarea>
+              <textarea  id="mailBox" name="mailBox" class="form-control cm" value="{{ message.content }}"></textarea>
           </div>
       </div>
 

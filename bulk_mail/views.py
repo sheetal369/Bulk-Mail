@@ -6,43 +6,45 @@ from django.shortcuts import redirect
 from emailsender.models import *
 from html2text import HTML2Text
 
-def index(request):        
-    if 'sent' in request.POST:
-        subject=request.POST['subject']
-        message=request.POST['mailBox']
-        selected_id = request.POST.getlist('group')
-        selected_groups=[Group.objects.get(id=i) for i in selected_id]
-        emails=((selected_group.emails.values_list('email_address', flat=True)) for selected_group in selected_groups)
-        all_emails=[email for sublist in emails for email in sublist]
-        email_message = EmailMultiAlternatives(subject, message, to=all_emails)#Send Email to all emails 
-        email_message.content_subtype='html'
-        email_message.send()
-        message=Message.objects.create(
-                subject=subject,
-                content=message,
-                status=Message.Status.SENT
-            )
-        for g in selected_groups:
-            message.message_group.add(g)
-        return redirect(reverse('sent_success', args=(message.id,)))
-    
-    if 'draft' in request.POST:
-        subject=request.POST['subject']
-        message=request.POST['mailBox']
-        converter = html2text.HTML2Text()
-        converter.ignore_links = True  # Ignore hyperlinks
-        plain_text = converter.handle(message)
-        selected_id = request.POST.getlist('group')
-        selected_groups=[Group.objects.get(id=i) for i in selected_id]
-        message=Message.objects.create(
-                subject=subject,
-                content=plain_text,
-                status=Message.Status.DRAFT
-            )
-        for g in selected_groups:
-            message.message_group.add(g)
-        return redirect(reverse('save_to_draft'))
-    
+def index(request):
+    if request.method=='POST':
+        if 'sent' in request.POST:
+            subject=request.POST['subject']
+            message=request.POST['mailBox']
+            converter = html2text.HTML2Text()
+            converter.ignore_links = True  # Ignore hyperlinks
+            plain_text = converter.handle(message)
+            selected_id = request.POST.getlist('group')
+            selected_groups=[Group.objects.get(id=i) for i in selected_id]
+            emails=((selected_group.emails.values_list('email_address', flat=True)) for selected_group in selected_groups)
+            all_emails=[email for sublist in emails for email in sublist]
+            email_message = EmailMultiAlternatives(subject, message, to=all_emails)#Send Email to all emails 
+            email_message.content_subtype='html'
+            email_message.send()
+            message=Message.objects.create(
+                    subject=subject,
+                    content=plain_text,
+                    status=Message.Status.SENT
+                )
+            for g in selected_groups:
+                message.message_group.add(g)
+            return redirect(reverse('sent_success', args=(message.id,)))
+        if 'draft' in request.POST:
+            subject=request.POST['subject']
+            message=request.POST['mailBox']
+            converter = html2text.HTML2Text()
+            converter.ignore_links = True  # Ignore hyperlinks
+            plain_text = converter.handle(message)
+            selected_id = request.POST.getlist('group')
+            selected_groups=[Group.objects.get(id=i) for i in selected_id]
+            message=Message.objects.create(
+                    subject=subject,
+                    content=plain_text,
+                    status=Message.Status.DRAFT
+                )
+            for g in selected_groups:
+                message.message_group.add(g)
+            return redirect(reverse('save_to_draft'))
     groups=Group.objects.all()
     return render(request,'index.html',{'groups':groups})
 
@@ -116,4 +118,11 @@ def save_to_draft(request):
 def all_mails(request):
     sent_mails=Message.sent.all()
     draft_mails=Message.draft.all()
-    return render(request,'all_mails.html',{'sent_mails':sent_mails,'draft_mails': draft_mails})
+    return render(request,'all_mails.html',{'sent_mails':sent_mails,
+                                            'draft_mails': draft_mails})
+def edit_mails(request,id):
+    message=get_object_or_404(Message,id=15)
+    groups=Group.objects.all()
+    return render(request,'index.html',{'groups':groups,
+                                        'message':message})
+    
