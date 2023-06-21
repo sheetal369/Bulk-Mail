@@ -98,8 +98,9 @@ def save_to_draft(request):
 def all_mails(request):
     sent_mails=Message.sent.all()
     draft_mails=Message.draft.all()
-    return render(request,'all_mails.html',{'sent_mails':sent_mails,
-                                            'draft_mails': draft_mails})
+    context ={'sent_mails':sent_mails, 'draft_mails': draft_mails}
+    return render(request,'all_mails.html',context)
+    
 def edit_mails(request,id):
     message=get_object_or_404(Message,id=id)
     groups=Group.objects.all()

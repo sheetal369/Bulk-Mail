@@ -28,6 +28,7 @@ urlpatterns = [
     path('view_groups/', view_groups, name="view_groups"),
     path('create_group/', create_group, name="create_group"),
     path('group/<int:id>/', group_detail, name='group'),
+    
     path('mails/',all_mails,name='all_mails' ),
     path('emailsent/<int:id>/',sent_success,name="sent_success"),
     path('draft/',save_to_draft,name='save_to_draft'),
