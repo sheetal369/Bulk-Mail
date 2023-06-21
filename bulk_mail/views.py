@@ -11,7 +11,7 @@ def index(request):
         if 'sent' in request.POST:
             subject=request.POST['subject']
             message=request.POST['mailBox']
-            converter = html2text.HTML2Text()
+            converter = HTML2Text()
             converter.ignore_links = True  # Ignore hyperlinks
             plain_text = converter.handle(message)
             selected_id = request.POST.getlist('group')
@@ -32,7 +32,7 @@ def index(request):
         if 'draft' in request.POST:
             subject=request.POST['subject']
             message=request.POST['mailBox']
-            converter = html2text.HTML2Text()
+            converter = HTML2Text()
             converter.ignore_links = True  # Ignore hyperlinks
             plain_text = converter.handle(message)
             selected_id = request.POST.getlist('group')
@@ -61,7 +61,6 @@ def create_user(request):
 def edit_user(request, id):
     
     if request.method == 'POST':
-        id = request.GET.get('id')
         user = User.objects.get(id=id)
         user.full_name = request.POST['full_name']
         user.phone_number = request.POST['phone_number']
@@ -72,15 +71,18 @@ def edit_user(request, id):
     user = User.objects.get(id=id)
     return render(request, 'edit_contact.html', {'contact': user})        
 
-def delete_user(request, id):
-    if request.GET:
-        id = request.GET.get('id')
+def delete_user(request):
+    if request.POST:
+        id = request.POST.get('id')
         user = User.objects.get(id = id)
         user.delete()
         return redirect(reverse("view_contacts"))
     else:
         HttpResponse("Operation Denied")
 
+def view_contacts(request):
+    contacts = User.objects.all()
+    return render(request, 'contacts.html', {"contacts":contacts})
 
 
 def create_group(request):
@@ -98,28 +100,35 @@ def create_group(request):
     contacts = User.objects.all()
     return render(request, 'create_group.html', {"contacts":contacts})
 
-def view_contacts(request):
-    contacts = User.objects.all()
-    return render(request, 'contacts.html', {"contacts":contacts})
-
 def view_groups(request):
     groups = Group.objects.all()
     return render(request, 'groups.html', {"groups":groups})
 
-def group_detail(request):
-    return render(request, 'group.html')
+def group_detail(request, id):
+    group = get_object_or_404(Group, id = id)
+    contacts = group.emails.all()
+    context = {
+        'group': group,
+        'contacts': contacts
+    }
+    print(contacts)
+    return render(request, 'group.html', context)
+
 
 def sent_success(request,id):
     message=get_object_or_404(Message, id=id)
     sent_groups=message.message_group.all()
     return render(request,'sentsuccess.html',{'sent_groups':sent_groups})
+
 def save_to_draft(request):
     return render(request,'save_to_draft.html')
+
 def all_mails(request):
     sent_mails=Message.sent.all()
     draft_mails=Message.draft.all()
     return render(request,'all_mails.html',{'sent_mails':sent_mails,
                                             'draft_mails': draft_mails})
+
 def edit_mails(request,id):
     message=get_object_or_404(Message,id=15)
     groups=Group.objects.all()
