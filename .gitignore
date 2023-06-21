@@ -1,8 +1,5 @@
 venv
 .vscode
-<<<<<<< HEAD
-__pycache__
-=======
 __pycache__
 *.pyc
->>>>>>> sheetal
+.venv
