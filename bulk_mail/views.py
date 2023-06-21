@@ -7,11 +7,13 @@ from emailsender.models import *
 import html2text
 
 def index(request):
-    groups=Group.objects.all()
     if request.method=='POST':
         if 'sent' in request.POST:
             subject=request.POST['subject']
             message=request.POST['mailBox']
+            converter = html2text.HTML2Text()
+            converter.ignore_links = True  # Ignore hyperlinks
+            plain_text = converter.handle(message)
             selected_id = request.POST.getlist('group')
             selected_groups=[Group.objects.get(id=i) for i in selected_id]
             emails=((selected_group.emails.values_list('email_address', flat=True)) for selected_group in selected_groups)
@@ -21,7 +23,7 @@ def index(request):
             email_message.send()
             message=Message.objects.create(
                     subject=subject,
-                    content=message,
+                    content=plain_text,
                     status=Message.Status.SENT
                 )
             for g in selected_groups:
@@ -43,7 +45,7 @@ def index(request):
             for g in selected_groups:
                 message.message_group.add(g)
             return redirect(reverse('save_to_draft'))
-
+    groups=Group.objects.all()
     return render(request,'index.html',{'groups':groups})
 
 def create_user(request):
@@ -100,3 +102,9 @@ def all_mails(request):
     draft_mails=Message.draft.all()
     return render(request,'all_mails.html',{'sent_mails':sent_mails,
                                             'draft_mails': draft_mails})
+def edit_mails(request,id):
+    message=get_object_or_404(Message,id=15)
+    groups=Group.objects.all()
+    return render(request,'index.html',{'groups':groups,
+                                        'message':message})
+    
