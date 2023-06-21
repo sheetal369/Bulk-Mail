@@ -9,7 +9,7 @@
             </a>
             Contacts<span class="sub-nav ms-2"> > All Contacts</span>
         </h3>
-        <p><a href="">Add Contacts</a></p>
+        <p><a href="{% url 'create_contact' %}">Add Contacts</a></p>
     </div>
 
     <table id="sampleTable" class="table hover-table" style="width:100%">
@@ -32,21 +32,22 @@
                 <td>
                     <div class="d-flex kit-action-com">
                         <div class="action-btn-pen">
+                            
                             <a href="" method="put"><span class="material-symbols-outlined">
                                 visibility
                                 </span></a>
                         </div>
                         <div class="action-btn-pen">
-                            <a href="" method="put"><span class="material-symbols-outlined">
-                                        edit
-                                        </span></a>
+                                <a href="{% url 'edit_contact' contact.id %}" method="put">
+                                <span class="material-symbols-outlined">edit</span></a>
                         </div>
                         <div class="action-btn-pen dlt-btn">
                             <a href="" method="put" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><span class="material-symbols-outlined ">
                                     delete
                                     </span></a>
                         </div>
-                        <form class="action-btn-dlt" action="{% url 'delete_contact' %}" method="post">
+                        <form class="action-btn-dlt" action="{% url 'delete_contact' contact.id %}" method="POST">
+                            {% csrf_token %}
                             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered confirmation-modal">
                                     <div class="modal-content">
@@ -54,6 +55,7 @@
                                             <span class="material-symbols-outlined delete-icon">cancel</span>
                                             <h3 class="mb-2">Are you sure?</h3>
                                             <p>Do you really want to delete this contact?<br></p>
+                                            <input type="hidden" name="id" value={{ contact.id }}>
                                         </div>
                                         <div class="modal-footer d-flex justify-content-center">
                                             <div class="row d-flex">

@@ -1,11 +1,52 @@
-from django.shortcuts import HttpResponse, render
+from django.shortcuts import HttpResponse, render,get_object_or_404
+from django.core.mail import EmailMessage,EmailMultiAlternatives
 from emailsender.forms import *
 from django.urls import reverse
 from django.shortcuts import redirect
 from emailsender.models import *
+from html2text import HTML2Text
 
 def index(request):
-    return render(request,'index.html')
+    if request.method=='POST':
+        if 'sent' in request.POST:
+            subject=request.POST['subject']
+            message=request.POST['mailBox']
+            converter = html2text.HTML2Text()
+            converter.ignore_links = True  # Ignore hyperlinks
+            plain_text = converter.handle(message)
+            selected_id = request.POST.getlist('group')
+            selected_groups=[Group.objects.get(id=i) for i in selected_id]
+            emails=((selected_group.emails.values_list('email_address', flat=True)) for selected_group in selected_groups)
+            all_emails=[email for sublist in emails for email in sublist]
+            email_message = EmailMultiAlternatives(subject, message, to=all_emails)#Send Email to all emails 
+            email_message.content_subtype='html'
+            email_message.send()
+            message=Message.objects.create(
+                    subject=subject,
+                    content=plain_text,
+                    status=Message.Status.SENT
+                )
+            for g in selected_groups:
+                message.message_group.add(g)
+            return redirect(reverse('sent_success', args=(message.id,)))
+        if 'draft' in request.POST:
+            subject=request.POST['subject']
+            message=request.POST['mailBox']
+            converter = html2text.HTML2Text()
+            converter.ignore_links = True  # Ignore hyperlinks
+            plain_text = converter.handle(message)
+            selected_id = request.POST.getlist('group')
+            selected_groups=[Group.objects.get(id=i) for i in selected_id]
+            message=Message.objects.create(
+                    subject=subject,
+                    content=plain_text,
+                    status=Message.Status.DRAFT
+                )
+            for g in selected_groups:
+                message.message_group.add(g)
+            return redirect(reverse('save_to_draft'))
+    groups=Group.objects.all()
+    return render(request,'index.html',{'groups':groups})
 
 def create_user(request):
     if request.method == 'POST':
@@ -16,6 +57,30 @@ def create_user(request):
     else:
         form = UserForm()
     return render(request, 'create_contact.html', {'form': form})
+
+def edit_user(request, id):
+    
+    if request.method == 'POST':
+        id = request.GET.get('id')
+        user = User.objects.get(id=id)
+        user.full_name = request.POST['full_name']
+        user.phone_number = request.POST['phone_number']
+        user.email_address = request.POST['email_address']
+        user.save()
+        return redirect('view_contacts')
+
+    user = User.objects.get(id=id)
+    return render(request, 'edit_contact.html', {'contact': user})        
+
+def delete_user(request, id):
+    if request.GET:
+        id = request.GET.get('id')
+        user = User.objects.get(id = id)
+        user.delete()
+        return redirect(reverse("view_contacts"))
+    else:
+        HttpResponse("Operation Denied")
+
 
 
 def create_group(request):
@@ -43,3 +108,21 @@ def view_groups(request):
 
 def group_detail(request):
     return render(request, 'group.html')
+
+def sent_success(request,id):
+    message=get_object_or_404(Message, id=id)
+    sent_groups=message.message_group.all()
+    return render(request,'sentsuccess.html',{'sent_groups':sent_groups})
+def save_to_draft(request):
+    return render(request,'save_to_draft.html')
+def all_mails(request):
+    sent_mails=Message.sent.all()
+    draft_mails=Message.draft.all()
+    return render(request,'all_mails.html',{'sent_mails':sent_mails,
+                                            'draft_mails': draft_mails})
+def edit_mails(request,id):
+    message=get_object_or_404(Message,id=15)
+    groups=Group.objects.all()
+    return render(request,'index.html',{'groups':groups,
+                                        'message':message})
+    
