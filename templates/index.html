@@ -11,7 +11,7 @@
           </a>
           Compose Mail<span class="sub-nav ms-2"> > Create Mail</span>
       </h3>
-      <p><a href="">View All</a></p>
+      <p><a href="{% url 'all_mails' %}">View All</a></p>
   </div>
 
 
@@ -24,14 +24,14 @@
       <div class="row mb-2">
           <div class="mb-3 col-md-12">
               <label for="" class="form-label cm">Mail Subject</label>
-              <input type="text" class="form-control cm" placeholder="Enter subject" name="subject">
+              <input type="text" {% if message %} value="{{ message.subject }}" {% endif %} class="form-control cm" placeholder="Enter subject" name="subject">
           </div>
       </div>
 
       <div class="row mb-2">
           <div class="mb-3 col-md-12">
               <label for="" class="form-label cm">Mail message</label>
-              <textarea  id="mailBox" name="mailBox" class="form-control cm"></textarea>
+              <textarea  id="mailBox" name="mailBox" class="form-control cm">{% if 'message' %}{{ message.content }}{% endif %}</textarea>
           </div>
       </div>
 
@@ -41,19 +41,23 @@
               <div class="checkbox-group">
                 {% for group in groups %}
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="group" value={{ group.id }} id=flexCheckChecked>
+                  <input class="form-check-input" type="checkbox" name="group" value={{ group.id }} >
                   <label class="form-check-label">
                     {{ group.name }}
                   </label>
                 </div>
                 {% endfor %}
+              
               </div>
           </div>
       </div>
 
   
       <div class="row mt-3">
-          <div class="col-md-12 text-end"><button type="submit" name="verify" class="btn btn-primary">Send Mail</button></div>
+        <div class="col-md-12 text-end">
+            <button type="submit" name="draft" class="btn btn-primary draft">Draft</button>
+            <button type="submit" name="sent" class="btn btn-primary">Send Mail</button>
+        </div>
       </div>
 
   </form>                    
