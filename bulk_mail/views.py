@@ -8,14 +8,15 @@ import html2text
 
 def index(request):
     if request.method=='POST':
+        subject=request.POST['subject']
+        message=request.POST['mailBox']
+        converter = html2text.HTML2Text()
+        converter.ignore_links = True  # Ignore hyperlinks
+        plain_text = converter.handle(message)
+        selected_id = request.POST.getlist('group')
+        print((selected_id))
+        selected_groups=[Group.objects.get(id=i) for i in (selected_id)]
         if 'sent' in request.POST:
-            subject=request.POST['subject']
-            message=request.POST['mailBox']
-            converter = html2text.HTML2Text()
-            converter.ignore_links = True  # Ignore hyperlinks
-            plain_text = converter.handle(message)
-            selected_id = request.POST.getlist('group')
-            selected_groups=[Group.objects.get(id=i) for i in selected_id]
             emails=((selected_group.emails.values_list('email_address', flat=True)) for selected_group in selected_groups)
             all_emails=[email for sublist in emails for email in sublist]
             email_message = EmailMultiAlternatives(subject, message, to=all_emails)#Send Email to all emails 
@@ -30,13 +31,6 @@ def index(request):
                 message.message_group.add(g)
             return redirect(reverse('sent_success', args=(message.id,)))
         if 'draft' in request.POST:
-            subject=request.POST['subject']
-            message=request.POST['mailBox']
-            converter = html2text.HTML2Text()
-            converter.ignore_links = True  # Ignore hyperlinks
-            plain_text = converter.handle(message)
-            selected_id = request.POST.getlist('group')
-            selected_groups=[Group.objects.get(id=i) for i in selected_id]
             message=Message.objects.create(
                     subject=subject,
                     content=plain_text,

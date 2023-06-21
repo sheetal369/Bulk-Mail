@@ -24,14 +24,14 @@
       <div class="row mb-2">
           <div class="mb-3 col-md-12">
               <label for="" class="form-label cm">Mail Subject</label>
-              <input type="text" value="{{ message.subject }}"class="form-control cm" placeholder="Enter subject" name="subject">
+              <input type="text" {% if message %} value="{{ message.subject }}" {% endif %} class="form-control cm" placeholder="Enter subject" name="subject">
           </div>
       </div>
 
       <div class="row mb-2">
           <div class="mb-3 col-md-12">
               <label for="" class="form-label cm">Mail message</label>
-              <textarea  id="mailBox" name="mailBox" class="form-control cm" value="{{ message.content }}"></textarea>
+              <textarea  id="mailBox" name="mailBox" class="form-control cm">{% if 'message' %}{{ message.content }}{% endif %}</textarea>
           </div>
       </div>
 
@@ -41,16 +41,13 @@
               <div class="checkbox-group">
                 {% for group in groups %}
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="group" value={{ group.id }} id=flexCheckChecked>
+                  <input class="form-check-input" type="checkbox" name="group" value={{ group.id }} >
                   <label class="form-check-label">
                     {{ group.name }}
                   </label>
                 </div>
                 {% endfor %}
-<<<<<<< HEAD
-=======
               
->>>>>>> b8cb7cbf9680b4bb30ac6d1b238e484a0afbef08
               </div>
           </div>
       </div>
