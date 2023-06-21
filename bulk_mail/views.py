@@ -86,7 +86,7 @@ def view_groups(request):
     groups = Group.objects.all()
     return render(request, 'groups.html', {"groups":groups})
 
-def group_detail(request):
+def group_detail(request, id):
     return render(request, 'group.html')
 
 def sent_success(request,id):
