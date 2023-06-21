@@ -31,9 +31,10 @@ urlpatterns = [
     path('create_group/', create_group, name="create_group"),
     path('group/<int:id>/', group_detail, name='group'),
     
-    
     path('mails/',all_mails,name='all_mails' ),
     path('emailsent/<int:id>/',sent_success,name="sent_success"),
     path('draft/',save_to_draft,name='save_to_draft'),
-    path('edit_mails/<int:id>',edit_mails,name="edit_mails")
+    path('edit_mails/<int:id>',edit_mails,name="edit_mails"),
+
+    path('login', login, name='login')
 ]

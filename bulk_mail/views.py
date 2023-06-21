@@ -135,3 +135,5 @@ def edit_mails(request,id):
     return render(request,'index.html',{'groups':groups,
                                         'message':message})
     
+def login(request):
+    return render(request, 'login.html')
