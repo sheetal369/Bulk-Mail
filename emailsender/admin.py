@@ -10,6 +10,7 @@ class GroupAdmin(admin.ModelAdmin):
     associated_users.short_description = 'Associated Users'
 
 
+
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = ['id', 'full_name', 'email_address', 'phone_number']
@@ -20,3 +21,5 @@ class MessageAdmin(admin.ModelAdmin):
     list_display = ['id', 'associated_groups', 'subject', 'created_at']
     def associated_groups(self, obj):
         return ", ".join([g.name for g in obj.message_group.all()])
+    class Meta:
+        list_filter=['status']

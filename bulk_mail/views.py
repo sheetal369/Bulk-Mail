@@ -95,8 +95,8 @@ def sent_success(request,id):
 def save_to_draft(request,):
     return render(request,'save_to_draft.html')
 def all_mails(request):
-    sent_mails=Message.sent.all()
-    draft_mails=Message.draft.all()
+    sent_mails=Message.objects.filter(status=Message.Status.SENT)
+    draft_mails=Message.objects.filter(status=Message.Status.SENT)
     context ={'sent_mails':sent_mails, 'draft_mails': draft_mails}
     return render(request,'all_mails.html',context)
     

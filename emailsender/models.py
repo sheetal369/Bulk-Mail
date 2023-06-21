@@ -41,9 +41,7 @@ class Message(models.Model):
     content = models.TextField()
     status= models.CharField(max_length=2,
                              choices=Status.choices,
-                             default=None)
-    sent=Sent()
-    draft=Draft()
+                             default=Status.DRAFT)
     created_at = models.DateTimeField(auto_now_add=True)
     objects=models.Manager()
     
