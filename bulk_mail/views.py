@@ -8,6 +8,27 @@ import html2text
 
 def index(request):
     if request.method=='POST':
+<<<<<<< HEAD
+        subject=request.POST['subject']
+        message=request.POST['mailBox']
+        selected_id = request.POST.getlist('group')
+        selected_groups=[Group.objects.get(id=i) for i in selected_id]
+        emails=((selected_group.emails.values_list('email_address', flat=True)) for selected_group in selected_groups)
+        all_emails=[email for sublist in emails for email in sublist]
+        email_message = EmailMultiAlternatives(subject, message, to=all_emails)
+        email_message.content_subtype='html'
+        email_message.send()
+        message=Message.objects.create(
+                subject=subject,
+                content=message,
+            )
+        for g in selected_groups:
+            message.message_group.add(g)
+        
+        
+        return redirect(reverse('sent_success', args=(message.id,)))
+        
+=======
         if 'sent' in request.POST:
             subject=request.POST['subject']
             message=request.POST['mailBox']
@@ -46,6 +67,7 @@ def index(request):
                 message.message_group.add(g)
             return redirect(reverse('save_to_draft'))
     groups=Group.objects.all()
+>>>>>>> 21679d4ad021eaaf065fe90d5337e84f052b0be1
     return render(request,'index.html',{'groups':groups})
 
 def create_user(request):
@@ -58,10 +80,14 @@ def create_user(request):
         form = UserForm()
     return render(request, 'create_contact.html', {'form': form})
 
-def delete_user(request, user_id):
-    user = User.objects.get(id = user_id)
-    user.delete()
-    return redirect(reverse("view_contacts"))
+def delete_user(request, id):
+    if request.GET:
+        id = request.GET.get('id')
+        user = User.objects.get(id = id)
+        user.delete()
+        return redirect(reverse("view_contacts"))
+    else:
+        HttpResponse("Operation Denied")
 
 
 
