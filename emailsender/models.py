@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.query import QuerySet
 from django.urls import reverse
 
 class Group(models.Model):
@@ -23,9 +24,29 @@ class User(models.Model):
 
     def __str__(self):
         return self.email_address
+    
+class Sent(models.Manager):
+    def get_queryset(self) -> QuerySet:
+        return super().get_queryset().filter(status=Message.Status.SENT)
+class Draft(models.Manager):
+    def get_queryset(self) -> QuerySet:
+        return super().get_queryset().filter(status=Message.Status.DRAFT)
 
 class Message(models.Model):
-    group = models.ManyToManyField(Group, name='message_group')
+    class Status(models.TextChoices):
+        DRAFT ='DF', 'Draft'
+        SENT ='ST', 'Sent'
+    group = models.ManyToManyField(Group, name='message_group',related_name="groups")
     subject = models.CharField(max_length=255)
     content = models.TextField()
+    status= models.CharField(max_length=2,
+                             choices=Status.choices,
+                             default=Status.DRAFT)
+    sent=Sent()
+    draft=Draft()
     created_at = models.DateTimeField(auto_now_add=True)
+    objects=models.Manager()
+    
+    def __str__(self) -> str:
+        return self.subject
+

@@ -8,12 +8,22 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-column db-navbar">
                 <li class="nav-item">
-                <a class="nav-link active"
+                    <a class="nav-link active"
+                        href="{% url 'all_mails' %}">
+                        <span class="material-symbols-outlined">
+            mail
+            </span>All Mail</a>
+                    </li>
+                <li class="nav-item">
+                <a class="nav-link"
                     href="{% url 'index' %}">
                     <span class="material-symbols-outlined">
     add_comment
     </span>Compose Mail</a>
+                
                 </li>
+
+                
                 <li class="nav-item accordion" id="users">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
