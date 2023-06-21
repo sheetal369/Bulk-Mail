@@ -35,7 +35,10 @@
                         <td>{{ sent_mail.id }}</td>
                         <td>{{ sent_mail.subject }}</td>
                         <td>{{ sent_mail.content }}</td>
-                        <td><span class="badge">{{ sent_mail.message_group }}</td>
+                        <td> {% for group in sent_mail.message_group.all %}
+                            <span class="badge">{{ group.name }}
+                                {% endfor %}
+                            </td>
                         <td>
                             <div class="d-flex kit-action-com">
                                 <div class="action-btn-pen">
@@ -112,7 +115,11 @@
                         <td>{{ draft_mail.id }}</td>
                         <td>{{draft_mail.subject }}</td>
                         <td>{{ draft_mail.content }}</td>
-                        <td><span class="badge">{{ draft_mail.message_group }}</span></td>
+                        <td>
+                            {% for group in draft_mail.message_group.all %}
+                            <span class="badge">{{ group.name }}</span>
+                            {% endfor %}
+                        </td>
                         <td>
                             <div class="d-flex kit-action-com">
                                 <div class="action-btn-pen">

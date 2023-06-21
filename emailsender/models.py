@@ -5,7 +5,7 @@ from django.urls import reverse
 class Group(models.Model):
     name=models.CharField(max_length=60,unique=True)
     description=models.TextField()
-    emails=models.ManyToManyField('Email',related_name='groups')
+    emails=models.ManyToManyField('User',related_name='groups')
 
     def __str__(self):
         return self.name
@@ -36,7 +36,7 @@ class Message(models.Model):
     class Status(models.TextChoices):
         DRAFT ='DF', 'Draft'
         SENT ='ST', 'Sent'
-    group = models.ManyToManyField(Group, name='message_group',related_name="groups")
+    group = models.ManyToManyField(Group, name='message_group',related_name="messages")
     subject = models.CharField(max_length=255)
     content = models.TextField()
     status= models.CharField(max_length=2,

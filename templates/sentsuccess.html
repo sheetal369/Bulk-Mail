@@ -7,7 +7,7 @@
                     <div class="success-message">
                         <h4>All Good!</h4>
                         <p>Your message was sent to following groups.</p>
-                        {% for sent_group in sent_groups %}
+                        {% for sent_group in sent_group %}
                         <p><span class="badge">{{ sent_group.name }}</span> </p>
                             {% endfor %}
                     </div>

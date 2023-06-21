@@ -107,7 +107,7 @@ def all_mails(request):
     return render(request,'all_mails.html',{'sent_mails':sent_mails,
                                             'draft_mails': draft_mails})
 def edit_mails(request,id):
-    message=get_object_or_404(Message,id=15)
+    message=get_object_or_404(Message,id=id)
     groups=Group.objects.all()
     return render(request,'index.html',{'groups':groups,
                                         'message':message})
