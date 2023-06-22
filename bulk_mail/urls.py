@@ -35,6 +35,6 @@ urlpatterns = [
     path('emailsent/<int:id>/',sent_success,name="sent_success"),
     path('draft/',save_to_draft,name='save_to_draft'),
     path('edit_mails/<int:id>',edit_mails,name="edit_mails"),
-
+    path('delete_mail/>', delete_mail, name='delete_mail'),
     path('login', login, name='login')
 ]

@@ -59,7 +59,6 @@ def create_user(request):
     return render(request, 'create_contact.html', {'form': form})
 
 def edit_user(request, id):
-    
     if request.method == 'POST':
         user = User.objects.get(id=id)
         user.full_name = request.POST['full_name']
@@ -74,11 +73,9 @@ def edit_user(request, id):
 def delete_user(request):
     if request.POST:
         id = request.POST.get('id')
-        user = User.objects.get(id = id)
+        user = get_object_or_404(User, id)
         user.delete()
         return redirect(reverse("view_contacts"))
-    else:
-        HttpResponse("Operation Denied")
 
 def view_contacts(request):
     contacts = User.objects.all()
@@ -128,12 +125,19 @@ def all_mails(request):
     draft_mails=Message.draft.all()
     context ={'sent_mails':sent_mails, 'draft_mails': draft_mails}
     return render(request,'all_mails.html',context)
-    
+
 def edit_mails(request,id):
     message=get_object_or_404(Message,id=id)
     groups=Group.objects.all()
     return render(request,'index.html',{'groups':groups,
                                         'message':message})
-    
+
+def delete_mail(request):
+    if request.POST:
+        id = request.POST.get('id')
+        message = get_object_or_404(Message, id = id)
+        message.delete()
+        return redirect(reverse("all_mails"))
+
 def login(request):
     return render(request, 'login.html')
