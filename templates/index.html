@@ -19,7 +19,7 @@
       <div class="col-md-12">
           <h3 class="create-form-heading">Compose Mail</h3>
       </div>
-
+      <input type="hidden" {% if message %} value="{{ message.id }}" {% endif %} name="message_">
       <div class="row mb-2">
           <div class="mb-3 col-md-12">
               <label for="" class="form-label cm">Mail Subject</label>
@@ -54,6 +54,7 @@
       <div class="row mt-3">
         <div class="col-md-12 text-end">
             <button type="submit" name="draft" class="btn btn-primary draft">Draft</button>
+            
             <button type="submit" name="sent" class="btn btn-primary">Send Mail</button>
         </div>
       </div>

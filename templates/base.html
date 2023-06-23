@@ -57,9 +57,180 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
+   
     <script>
-        $(document).ready(function() {
-            $('#mailBox').summernote();
+        $(document).ready(function () {
+            var table = $('#sampleTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [{
+                    extend: 'copy',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'csv',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                }
+                ],
+                columnDefs: [
+                    {
+                        targets: -1,
+                        visible: true,
+                    }
+                ]
+            });
+    
+        });
+        $(document).ready(function () {
+            var table = $('#senttable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [{
+                    extend: 'copy',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'csv',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                }
+                ],
+                columnDefs: [
+                    {
+                        targets: -1,
+                        visible: true,
+                    }
+                ]
+            });
+
+        });
+
+        $(document).ready(function () {
+            var table = $('#draftTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [{
+                    extend: 'copy',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'csv',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                }
+                ],
+                columnDefs: [
+                    {
+                        targets: -1,
+                        visible: true,
+                    }
+                ]
+            });
+
+        });
+        $(document).ready(function () {
+            var table = $('#grouptable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [{
+                    extend: 'copy',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'csv',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                }
+                ],
+                columnDefs: [
+                    {
+                        targets: -1,
+                        visible: true,
+                    }
+                ]
+            });
+
         });
     </script>
 

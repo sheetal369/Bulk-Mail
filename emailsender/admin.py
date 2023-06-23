@@ -18,7 +18,7 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ['id', 'associated_groups', 'subject', 'created_at']
+    list_display = ['id', 'associated_groups', 'subject', 'created_at', 'status']
     def associated_groups(self, obj):
         return ", ".join([g.name for g in obj.message_group.all()])
     class Meta:

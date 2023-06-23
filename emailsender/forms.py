@@ -1,7 +1,9 @@
 from django import forms
 from .models import Group, User
 
-
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=150,label='Username')
+    password = forms.CharField(widget=forms.PasswordInput())
 class CreateGroup(forms.Form):
     name=forms.CharField(required=True,max_length=50)
     emails=forms.ModelMultipleChoiceField(queryset=User.objects.values_list('email_address', flat=True))

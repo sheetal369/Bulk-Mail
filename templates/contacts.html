@@ -4,7 +4,7 @@
 <div class="col-md-10 db-content">
     <div class="add-heading">
         <h3 class="heading-cm">
-            <a href="{% url "index" %}" class="nav-icon me-2">
+            <a href="{% url 'index' %}" class="nav-icon me-2">
                 <i class="fa-solid fa-angle-left"></i>
             </a>
             Contacts<span class="sub-nav ms-2"> > All Contacts</span>
@@ -13,4 +13,6 @@
     </div>
     {% include 'contacts_table.html' %}
 </div>
+
+
 {% endblock content %}

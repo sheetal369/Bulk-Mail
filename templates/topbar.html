@@ -8,6 +8,7 @@
     <div class="db-title">
     <h2>E-mail Management System</h2>
     </div>
+    {% if request.user.is_authenticated %}
     <div class="db-top-bar-right">
     <div class="db-user-profile">
         <div class="db-user-profile-right dropdown main">
@@ -18,14 +19,14 @@
                         alt="">
                 </div>
                 <div>
-                    <h3 class="username">Sheetal Sharma</h3>
+                    <h3 class="username">{{ user.username }}</h3>
                     <p class="userrole">Super Admin</p>
                 </div>
             </button>
             <ul class="dropdown-menu ">
                 <li><a class="dropdown-item profile" href="">My Account</a></li>
                 <li>
-                    <a class="dropdown-item log-profile" href="{% url 'login' %}">
+                    <a class="dropdown-item log-profile" href="{% url 'login_user' %}">
                         Logout
                     </a>
                 </li>
@@ -33,3 +34,5 @@
         </div>
     </div>
     </div>
+    {% endif %}
+    
