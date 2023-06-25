@@ -131,6 +131,7 @@ def group_detail(request, id):
     }
     return render(request, 'group.html', context)
 
+
 @login_required
 def sent_success(request,id):
     message=get_object_or_404(Message, id=id)
@@ -154,6 +155,14 @@ def edit_mails(request,id):
     groups=Group.objects.all()
     return render(request,'index.html',{'groups':groups,
                                         'message':message})
+@login_required
+def delete_mails(request,):
+    if request.method=='POST':
+        id=request.POST.get('id')
+        message=Message.objects.get(id=id)
+        message.delete()
+        return redirect(reverse('all_mails'))
+
     
 def login_user(request):
     if request.method == 'POST':
@@ -170,3 +179,8 @@ def login_user(request):
         form = LoginForm()
 
     return render(request, 'login.html', {'login': form})
+
+@login_required
+def logout_user(request):
+    logout(request)
+    return redirect(reverse('login_user'))

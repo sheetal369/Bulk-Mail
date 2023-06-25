@@ -23,6 +23,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
 
     path('',login_user,name='login_user'),
+    path('logout/',logout_user,name='logout_user'),
     path('compose_mail/', index, name="index"),
     path('view_contacts/', view_contacts, name="view_contacts"),    
     path('create-contact/', create_user, name="create_contact"),
@@ -37,4 +38,5 @@ urlpatterns = [
     path('emailsent/<int:id>/',sent_success,name="sent_success"),
     path('draft/',save_to_draft,name='save_to_draft'),
     path('edit_mails/<int:id>',edit_mails,name="edit_mails"),
+    path('delete_mails',delete_mails,name='delete_mail')
 ]
